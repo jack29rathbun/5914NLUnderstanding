@@ -12,7 +12,6 @@ natural_language_understanding = NaturalLanguageUnderstandingV1(
 
 natural_language_understanding.set_service_url('https://api.us-east.natural-language-understanding.watson.cloud.ibm.com/instances/a493cc01-e1ed-4846-8afb-e7324c948070')
 
-
 with open('products.txt', 'r') as fd:
     for line in fd.readlines():
         url = line.strip()
@@ -22,6 +21,7 @@ with open('products.txt', 'r') as fd:
             response = natural_language_understanding.analyze(
                 url=url,
                 features=Features(categories=CategoriesOptions(limit=3))).get_result()
+            print(response['categories'][0]['label'])
             print(json.dumps(response, indent=2))
         except ibm_cloud_sdk_core.api_exception.ApiException:
             print("ibm_cloud_sdk_core.api_exception.ApiException")
